@@ -56,7 +56,7 @@ for filename in os.listdir(xmlDirectory):
         
         streets.append((int(street_number), street_name, filename))
 
-streets_sorted = sorted(streets, key=lambda x: x[0])
+streets_sorted = sorted(streets, key=lambda x: x[1])
 
 for street_number, street_name, filename in streets_sorted:
     list_item = f'<li><a href="{street_number}-{street_name.replace(" ", "")}.html">{street_number}: {street_name}</a></li>\n'
