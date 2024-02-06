@@ -16,7 +16,7 @@ preHTML = """
     <body>
         <div class="w3-card-4">
             <header class="w3-container w3-purple">
-                <h3>{rua_numero}: {rua_nome}</h3>
+                <h3>{rua_nome}</h3>
             </header>
             <div class="w3-container">
 """
@@ -76,9 +76,7 @@ for filenome in os.listdir(source_directory):
         
         dynamic_content = generate_html_content(root)
         
-        full_html = preHTML.format(title=f"rua {rua_numero}: {rua_nome}",
-                                   rua_numero=rua_numero,
-                                   rua_nome=rua_nome) + dynamic_content + posHTML
+        full_html = preHTML.format(title=f"{rua_nome}", rua_nome = rua_nome) + dynamic_content + posHTML
         
         with open(output_file_path, 'w', encoding='utf-8') as f:
             f.write(full_html)
