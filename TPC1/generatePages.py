@@ -43,7 +43,7 @@ def generate_html_content(root):
     for figura in root.findall('.//figura'):
         image_path = "../MapaRuas/" + figura.find('.//imagem').get('path').replace("../", "")
         caption = figura.find('.//legenda').text
-        content += f"<figure><img src='{image_path}' alt='{caption}'><figcaption>{caption}</figcaption></figure>"
+        content += f"<figure><img src='{image_path}' style='max-width: 100%;height: auto;' alt='{caption}'><figcaption>{caption}</figcaption></figure>"
     
     casas = root.find('.//lista-casas')
     if casas is not None:

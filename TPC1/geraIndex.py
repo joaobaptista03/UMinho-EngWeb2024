@@ -56,6 +56,12 @@ for filename in os.listdir(xmlDirectory):
         
         streets.append((int(street_number), street_name, filename))
 
+for i, street in enumerate(streets):
+    if street[1][0] == ' ':
+        street_list = list(street)
+        street_list[1] = street_list[1][1:]
+        streets[i] = tuple(street_list)
+
 streets_sorted = sorted(streets, key=lambda x: x[1])
 
 for street_number, street_name, filename in streets_sorted:

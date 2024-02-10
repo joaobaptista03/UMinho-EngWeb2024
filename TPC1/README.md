@@ -3,12 +3,12 @@
 
 ## Autor:
 - A100705
-- Jo„o Pedro Mota Baptista
+- Jo√£o Pedro Mota Baptista
 
 ## Resumo:
 
-Neste trabalho, utilizou-se o material fornecido pelo docente, ficheiros XML com a informaÁ„o de 60 ruas de Braga, fotos atuais (associadas a uma determinada visita), e fotos dos esquiÁos desenhados no sÈc. XVIII das mesmas ruas, para produzir um website onde se pode consultar e navegar nesta estrutura.
+Neste trabalho, utilizou-se o material fornecido pelo docente, ficheiros XML com a informa√ß√£o de 60 ruas de Braga, fotos atuais (associadas a uma determinada visita), e fotos dos esqui√ßos desenhados no s√©c. XVIII das mesmas ruas, para produzir um website onde se pode consultar e navegar nesta estrutura.
 
-O site apresenta uma p·gina principal com a lista de ruas ordenada alfabeticamente.
+O site apresenta uma p√°gina principal com a lista de ruas ordenada alfabeticamente.
 
-Clicando numa das ruas acede-se ‡ p·gina individual da rua onde se pode consultar toda a sua informaÁ„o. Nesta p·gina h· tambÈm um link para regressar ‡ p·gina principal.
+Clicando numa das ruas acede-se √† p√°gina individual da rua onde se pode consultar toda a sua informa√ß√£o. Nesta p√°gina h√° tamb√©m um link para regressar √† p√°gina principal.
