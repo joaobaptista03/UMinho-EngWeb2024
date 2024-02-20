@@ -61,7 +61,7 @@ with open('mapa-virtual.json') as f:
     data = json.load(f)
     cities = sorted(data['cidades'], key=lambda x: x['nome'])
     for cidade in cities:
-        cidade_nome = cidade['nome'] + " " + cidade['distrito']
+        cidade_nome = cidade['nome']
         content = generateContent(cidade)
         pageHTML = preHTML.format(title=cidade_nome, cidade_nome=cidade_nome) + content + posHTML
         f = open('./cidadesSite/' + cidade['id'] + '.html', 'w')
