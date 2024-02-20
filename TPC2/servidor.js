@@ -3,10 +3,10 @@ var url = require('url');
 var fs = require('fs');
 
 http.createServer(function(req, res) {
-    var q = url.parse(req.url, true).pathname.slice(1);
+    var q = url.parse(req.url, true).pathname.slice(1)
 
     if (q === '') {
-        serveFile('cidadesSite/index.html', 'text/html; charset=utf-8', res);
+        serveFile('cidadesSite/index.html', 'text/html; charset=utf-8', res)
     } else if (q === 'w3.css') {
         serveFile('w3.css', 'text/css', res);
     } else {
@@ -14,11 +14,11 @@ http.createServer(function(req, res) {
             if (err) {
                 sendError(res);
             } else {
-                var ids = JSON.parse(data).cidades.map(cidade => cidade.id);
+                var ids = JSON.parse(data).cidades.map(cidade => cidade.id)
                 if (ids.includes(q)) {
-                    serveFile('cidadesSite/' + q + '.html', 'text/html; charset=utf-8', res);
+                    serveFile('cidadesSite/' + q + '.html', 'text/html; charset=utf-8', res)
                 } else {
-                    console.log('404: ' + q);
+                    serveFile('cidadesSite/404.html', 'text/html; charset=utf-8', res)
                 }
             }
         });
