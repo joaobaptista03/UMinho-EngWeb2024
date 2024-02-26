@@ -9,7 +9,7 @@ http.createServer(function(req, res) {
         serveFile('cidadesSite/index.html', 'text/html; charset=utf-8', res)
     } else if (q === 'w3.css') {
         serveFile('w3.css', 'text/css', res);
-    } else {
+    } else if (/c\d+/.test(q)) {
         fs.readFile('mapa-virtual.json', function(err, data) {
             if (err) {
                 sendError(res);
@@ -22,6 +22,8 @@ http.createServer(function(req, res) {
                 }
             }
         });
+    } else {
+        serveFile('cidadesSite/404.html', 'text/html; charset=utf-8', res)
     }
 }).listen(7777);
 
