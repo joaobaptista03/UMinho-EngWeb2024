@@ -16,7 +16,7 @@ function getFilmes(filmes) {
         <div class="w3-card-4">
             <header class="w3-container w3-purple">
                 <h1>Lista de Filmes</h1>
-                <a href="javascript:history.back()">Mateus não copies</a>
+                <a href="javascript:history.back()">Voltar</a>
             </header>
 
             <div class="w3-container">
@@ -62,7 +62,7 @@ function getFilme(filme) {
         <div class="w3-card-4">
             <header class="w3-container w3-purple">
                 <h1>${filme.title}</h1>
-                <a href="javascript:history.back()">Mateus não copies</a>
+                <a href="javascript:history.back()">Voltar</a>
             </header>
 
             <div class="w3-container">`
@@ -113,7 +113,7 @@ function getGeneros(generos) {
         <div class="w3-card-4">
             <header class="w3-container w3-purple">
                 <h1>Lista de Géneros</h1>
-                <a href="javascript:history.back()">Mateus não copies</a>
+                <a href="javascript:history.back()">Voltar</a>
             </header>
 
             <div class="w3-container">
@@ -157,7 +157,7 @@ function getGenero(genero) {
         <div class="w3-card-4">
             <header class="w3-container w3-purple">
                 <h1>${genero.name}</h1>
-                <a href="javascript:history.back()">Mateus não copies</a>
+                <a href="javascript:history.back()">Voltar</a>
             </header>
 
             <div class="w3-container">`
@@ -198,7 +198,7 @@ function getAtores(atores) {
         <div class="w3-card-4">
             <header class="w3-container w3-purple">
                 <h1>Lista de Atores</h1>
-                <a href="javascript:history.back()">Mateus não copies</a>
+                <a href="javascript:history.back()">Voltar</a>
             </header>
 
             <div class="w3-container">
@@ -242,7 +242,7 @@ function getAtor(ator) {
         <div class="w3-card-4">
             <header class="w3-container w3-purple">
                 <h1>${ator.name}</h1>
-                <a href="javascript:history.back()">Mateus não copies</a>
+                <a href="javascript:history.back()">Voltar</a>
             </header>
 
             <div class="w3-container">`
