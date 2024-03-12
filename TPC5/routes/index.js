@@ -205,7 +205,7 @@ router.post('/compositores/editar/:idCompositor', function (req, res) {
 
 			axios.put('http://localhost:3000/compositores/' + req.body.id, req.body)
 			.then(resposta => {
-				res.render('confirmarRegistoEdicao', { titulo: 'Confirmação de Edição', compositor: req.body, data: d });
+				res.redirect('/compositores');
 			})
 			.catch(erro => {
 				res.render('error', { message: 'Erro ao editar o compositor.', data: d })
