@@ -1,0 +1,38 @@
+extends layout
+
+block content
+	.w3-card-4
+		header.w3-container.w3-blue 
+			h1= titulo
+		
+		.w3-container
+			p
+				b ID 
+				a : #{compositor.id}
+
+			p
+				b Nome
+				a : #{compositor.nome}
+
+			p
+				b Bio
+				a : #{compositor.bio}
+
+			p 
+				b Periodo
+				| : 
+				a(href='/periodos/' + compositor.periodo.id) #{compositor.periodo.nome}
+
+			p
+				b Data de Nascimento
+				a : #{compositor.dataNasc}
+			
+			p
+				b Data de Falecimento
+				a : #{compositor.dataObito}
+
+
+		footer.w3-container.w3-blue
+			address Gerado por EngWeb2024 em #{data}
+			a.w3-button.w3-blue(href='javascript:history.back()') Voltar
+			br
