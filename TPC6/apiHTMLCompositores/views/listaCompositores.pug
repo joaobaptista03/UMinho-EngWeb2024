@@ -1,0 +1,32 @@
+extends layout
+
+block content
+	.w3-card-4
+		header.w3-container.w3-blue 
+			h1= titulo
+		
+		.w3-container
+			br
+			table.w3-table-all 
+				tr
+					th ID 
+					th Nome
+					th Periodo
+					th Actions
+
+				each compositor in lista
+					tr
+						td
+							a(href='/compositores/' + compositor._id)= compositor._id
+						td= compositor.nome
+						td
+							a(href='/periodos/' + compositor.periodo._id)= compositor.periodo.nome
+						td
+							a.w3-button.w3-blue(href='/compositores/editar/' + compositor._id) Editar
+							| 
+							a.w3-button.w3-blue(href='/compositores/delete/' + compositor._id) Apagar
+			br
+			
+		footer.w3-container.w3-blue
+			address Gerado por EngWeb2024 em #{data}
+			a.w3-button.w3-blue(href='javascript:history.back()') Voltar
