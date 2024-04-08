@@ -17,8 +17,14 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/:modalidade', function (req, res, next) {
-	Modalidade.findById(req.params.modalidade)
-		.then(dados => res.jsonp(dados))
+	var pessoas = [];
+	Pessoa.list()
+		.then(dados => {
+			for (let i = 0; i < dados.length; i++) {
+				if (dados[i].desportos.indexOf(req.params.modalidade) != -1) pessoas.push(dados[i]);
+			}
+			res.jsonp(pessoas.sort());
+		})
 		.catch(erro => res.jsonp(erro));
 });
 
