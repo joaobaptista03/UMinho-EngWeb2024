@@ -13,12 +13,12 @@ module.exports.findById = id => {
         .exec();
 }
 
-module.exports.insert = Pessoa => {
-    return Pessoa.create(Pessoa);
+module.exports.insert = pessoa => {
+    return Pessoa.create(pessoa);
 }
 
-module.exports.update = Pessoa => {
-    return Pessoa.updateOne({_id: Pessoa._id}, Pessoa);
+module.exports.update = pessoa => {
+    return Pessoa.updateOne({_id: pessoa._id}, pessoa);
 }
 
 module.exports.remove = id => {
