@@ -1,0 +1,116 @@
+extends layout
+
+block content
+  div.w3-center
+    if path && path != '' && path != '/' && path != '../' && path != '/../'
+      a.w3-button.w3-blue.w3-round-large.w3-hover-shadow.w3-margin-right(href=`/files?path=${path.split('/').slice(0, -1).join('/')}`) &#8592;
+    if path != '..' && path != '../' && path != '/../' && path != '/..'
+      a.w3-button.w3-blue.w3-round-large.w3-hover-shadow.w3-margin-right(href=`/files?path=../`) Todos os Ficheiros
+    a.w3-button.w3-green.w3-round-large.w3-large.w3-margin-right.w3-hover-shadow(onclick="addFicheiro()") Adicionar Novo Ficheiro
+    a.w3-button.w3-green.w3-round-large.w3-large.w3-margin-right.w3-hover-shadow(onclick="addPasta()") Adicionar Nova Pasta
+
+  .w3-container.w3-padding-16
+    table.w3-table.w3-bordered.w3-striped.w3-white.w3-card-4
+      thead.w3-light-grey
+        tr
+          th Nome
+          th Ação
+      tbody
+        each file in files
+          tr
+            td= file.name
+            td
+              if file.isDirectory
+                a.w3-button.w3-green.w3-round-large.w3-hover-shadow.w3-margin-right(href=`/files?path=${path}/${file.name}`) Abrir
+                a.w3-button.w3-red.w3-round-large.w3-hover-shadow(onclick=`deleteFile('${path}','${file.name}', "dir")`) Apagar
+              else
+                a.w3-button.w3-blue.w3-round-large.w3-hover-shadow.w3-margin-right(href=`/files/download?path=${username}/${path}/${file.name}`) Download
+                a.w3-button.w3-red.w3-round-large.w3-hover-shadow.w3-margin-right(onclick=`deleteFile('${path}','${file.name}', "file")`) Apagar
+                a.w3-button.w3-green.w3-round-large.w3-hover-shadow(onclick=`copyHyperlink('${path}','${file.name}')`) Copiar Hyperlink
+
+  script.
+    const path = !{JSON.stringify(path)};
+  
+    function addFicheiro() {
+      const modal = document.createElement('div');
+      modal.setAttribute('id', 'addFileModal');
+      modal.classList.add('w3-modal');
+      modal.innerHTML = `
+        <div class="w3-modal-content w3-animate-opacity w3-card-4">
+          <header class="w3-container w3-fadeblue"> 
+            <span onclick="document.getElementById('addFileModal').style.display='none'" 
+            class="w3-buttonX w3-display-topright">&times;</span>
+            <h2>Adicionar Novo Ficheiro</h2>
+          </header>
+          <div class="w3-container">
+            <form method="POST" action="/files" enctype="multipart/form-data" class="w3-container">
+              <p>
+                <input type="file" name="file" class="w3-input w3-border w3-round-large" required>
+              </p>
+              <input type="hidden" name="path" value="${path}">
+              <p>
+                <button type="submit" class="w3-button w3-blue w3-round-large w3-hover-shadow">Enviar</button>
+              </p>
+            </form>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      document.getElementById('addFileModal').style.display = 'block';
+    }
+
+    function deleteFile(path, fileName, dirOrFile) {
+      if (confirm('Tem a certeza que deseja apagar?')) {
+        var filePath = path ? `${path}/${fileName}` : fileName;
+        fetch(`/files/delete?path=${filePath}&type=${dirOrFile}`, {
+          method: 'GET'
+        })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(err => {
+          console.error(err);
+        });
+      }
+    }
+
+    function addPasta() {
+      const modal = document.createElement('div');
+      modal.setAttribute('id', 'addFolderModal');
+      modal.classList.add('w3-modal');
+      modal.innerHTML = `
+        <div class="w3-modal-content w3-animate-opacity w3-card-4">
+          <header class="w3-container w3-fadeblue"> 
+            <span onclick="document.getElementById('addFolderModal').style.display='none'" 
+            class="w3-buttonX w3-display-topright">&times;</span>
+            <h2>Adicionar Nova Pasta</h2>
+          </header>
+          <div class="w3-container">
+            <form method="POST" action="/files/folder" class="w3-container">
+              <p>
+                <input type="text" placeholder="Nome da Pasta" name="folderName" class="w3-input w3-border w3-round-large" required>
+              </p>
+              <input type="hidden" name="path" value="${path}">
+              <p>
+                <button type="submit" class="w3-button w3-blue w3-round-large w3-hover-shadow">Enviar</button>
+              </p>
+            </form>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      document.getElementById('addFolderModal').style.display = 'block';
+    }
+
+    const username = !{JSON.stringify(username)};
+
+    function copyHyperlink(path, fileName) {
+      const url = `[${fileName}](./${username}/${path}/${fileName})`;
+      navigator.clipboard.writeText(url)
+      .then(() => {
+        alert('Hyperlink copiado para a área de transferência');
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    }

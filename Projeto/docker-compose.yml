@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+    restart: always
+
+  mongo-seed:
+    build:
+      context: ./api-geradorUCs
+      dockerfile: Dockerfile-seed
+    depends_on:
+      - mongo
+    command: >
+      bash -c "sleep 1 && 
+      mongoimport --host mongo --db projeto-geradorUCS --collection users --type json --drop --file /data/users.json --jsonArray &&
+      mongoimport --host mongo --db projeto-geradorUCS --collection ucs --type json --drop --file /data/ucs.json --jsonArray"
+    networks:
+      - app-network
+    restart: "no"
+
+  api-geradorucs:
+    build:
+      context: ./api-geradorUCs
+    ports:
+      - "3124:3124"
+    depends_on:
+      - mongo
+      - mongo-seed
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/projeto-geradorUCS
+      - AUTH_URI=http://auth-geradorucs:3123
+    networks:
+      - app-network
+    restart: always
+
+  html-geradorucs:
+    build:
+      context: ./html-geradorUCs
+    ports:
+      - "3125:3125"
+    environment:
+      - API_URI=http://api-geradorucs:3124
+      - AUTH_URI=http://auth-geradorucs:3123
+    depends_on:
+      - api-geradorucs
+    networks:
+      - app-network
+    restart: always
+
+  auth-geradorucs:
+    build:
+      context: ./auth-geradorUCs
+    ports:
+      - "3123:3123"
+    depends_on:
+      - mongo
+      - api-geradorucs
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/projeto-geradorUCS
+      - API_URI=http://api-geradorucs:3124
+    networks:
+      - app-network
+    restart: always
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:

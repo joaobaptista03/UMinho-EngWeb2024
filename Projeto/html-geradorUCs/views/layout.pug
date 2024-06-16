@@ -1,0 +1,110 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/w3.css')
+    link(rel='stylesheet', href='/stylesheets/w3_overlap.css')
+
+  body
+    header.w3-bar
+      .w3-bar-item
+        a.w3-button.w3-padding-large.w3-round-large(href='/') Home
+
+
+      if username && username !== ''
+        if isAdmin
+          .w3-left.w3-bar-item
+            a.w3-button.w3-padding-large.w3-round-large(href="/users?role=admin") Admins
+          .w3-left.w3-bar-item
+            a.w3-button.w3-padding-large.w3-round-large(href="/users?role=docente") Docentes
+        if isAdmin || isDocente
+          .w3-left.w3-bar-item
+            a.w3-button.w3-padding-large.w3-round-large(href='/files') Os Meus Ficheiros
+        .w3-right.w3-bar-item
+          a.w3-padding-large(style='cursor: default;')= username
+          img.w3-circle(src='/images/users/' + username + '.' + fotoExt, alt='user', style='width: 50px; height: 50px;')
+        .w3-right.w3-bar-item
+          a.w3-button.w3-padding-large.w3-round-large(onclick="logout()") Logout
+        .w3-right.w3-bar-item
+          a.w3-button.w3-padding-large.w3-round-large(onclick="showAlterarPasswordModal()") Alterar Password
+        if !isAdmin && !isDocente
+          .w3-right.w3-bar-item
+            a.w3-button.w3-padding-large.w3-round-large(onclick="showAddUC()") Adicionar UC
+
+      else
+        .w3-right.w3-bar-item
+          a.w3-button.w3-padding-large.w3-round-large(href='/users/login') Login
+        .w3-right.w3-bar-item
+          a.w3-button.w3-padding-large.w3-round-large(href='/users/registar?role=aluno') Registar
+          
+
+    if title && title != 'Erro' && title != 'Sucesso'
+      .w3-card-4.w3-margin.w3-white.w3-padding
+        .w3-container.w3-padding-16
+          h1.w3-xxlarge.w3-text-blue.w3-center= title
+
+    .w3-container.w3-padding.w3-animate-opacity
+      block content
+
+    script.
+      function logout() {
+        fetch('/users/logout', { method: 'POST' })
+          .then(() => window.location = '/')
+      }
+
+      function showAlterarPasswordModal() {
+        const modal = document.createElement('div');
+        modal.setAttribute('id', 'alterarPasswordModal');
+        modal.classList.add('w3-modal');
+        modal.innerHTML = `
+          <div class="w3-modal-content w3-animate-opacity w3-card-4">
+            <header class="w3-container w3-fadeblue"> 
+              <span onclick="document.getElementById('alterarPasswordModal').style.display='none'" 
+              class="w3-buttonX w3-display-topright">&times;</span>
+              <h2>Alterar Password</h2>
+            </header>
+            <div class="w3-container">
+              <form method="POST" action="/users/changePassword" class="w3-container">
+                <p>
+                  <input type="password" name="oldPassword" placeholder="Password Antiga" class="w3-input w3-border w3-round-large" required>
+                </p>
+                <p>
+                  <input type="password" name="newPassword" placeholder="Password Nova" class="w3-input w3-border w3-round-large" required>
+                </p>
+                <p>
+                  <button type="submit" class="w3-button w3-blue w3-round-large w3-hover-shadow">Alterar Password</button>
+                </p>
+              </form>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById('alterarPasswordModal').style.display = 'block';
+      }
+
+      function showAddUC() {
+        const modal = document.createElement('div');
+        modal.setAttribute('id', 'addUCModal');
+        modal.classList.add('w3-modal');
+        modal.innerHTML = `
+          <div class="w3-modal-content w3-animate-opacity w3-card-4">
+            <header class="w3-container w3-fadeblue"> 
+              <span onclick="document.getElementById('addUCModal').style.display='none'" 
+              class="w3-buttonX w3-display-topright">&times;</span>
+              <h2>Adicionar UC</h2>
+            </header>
+            <div class="w3-container">
+              <form method="POST" action="/ucs/add" class="w3-container">
+                <p>
+                  <input type="text" name="sigla" placeholder="Sigla" class="w3-input w3-border w3-round-large" required>
+                </p>
+                <p>
+                  <button type="submit" class="w3-button w3-blue w3-round-large w3-hover-shadow">Adicionar UC</button>
+                </p>
+              </form>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById('addUCModal').style.display = 'block';
+      }
